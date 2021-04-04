@@ -54,3 +54,36 @@ function punchOut(time) { //takes a string based time punch and returns an objec
     console.log(obj)
     return obj
 }
+
+function hoursWorkedOnDate(employee, dateVal) { //takes employee information and a date and calculates hours worked
+    let inCheck = employee.timeInEvents.find(check => check.date === dateVal)
+    let outCheck = employee.timeOutEvents.find(checks => checks.date === dateVal)
+    console.log (inCheck, outCheck)
+    let hours = (outCheck.hour - inCheck.hour) / 100
+    console.log(hours)
+    return hours
+}
+
+function wagesEarnedOnDate(employee, date) { //checks the wages earned on a specific day
+    let value = hoursWorkedOnDate(employee, date)
+    return value * employee.payPerHour
+}
+
+function allWagesFor(employee) {
+    let total = 0
+    for (let i = 0; i < employee.timeInEvents.length; i++) {
+        total = total + wagesEarnedOnDate(employee, employee.timeInEvents[i].date)
+        console.log(total)
+    }
+    return total
+}
+
+function myTest() {
+    let cRecord = createEmployeeRecord(["Julius", "Caesar", "General", 27])
+    let updatedBpRecord = createTimeInEvent(cRecord, "0044-03-14 0900")
+    updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-14 2100")
+    updatedBpRecord = createTimeInEvent(cRecord, "0044-03-15 0800")
+    updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-15 1100")
+    //hoursWorkedOnDate(cRecord, "0044-03-15")
+    allWagesFor(cRecord)
+}
