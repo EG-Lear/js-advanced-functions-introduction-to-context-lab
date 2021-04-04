@@ -69,7 +69,7 @@ function wagesEarnedOnDate(employee, date) { //checks the wages earned on a spec
     return value * employee.payPerHour
 }
 
-function allWagesFor(employee) {
+function allWagesFor(employee) { //calculates total wages for an employee
     let total = 0
     for (let i = 0; i < employee.timeInEvents.length; i++) {
         total = total + wagesEarnedOnDate(employee, employee.timeInEvents[i].date)
@@ -78,12 +78,33 @@ function allWagesFor(employee) {
     return total
 }
 
-function myTest() {
-    let cRecord = createEmployeeRecord(["Julius", "Caesar", "General", 27])
-    let updatedBpRecord = createTimeInEvent(cRecord, "0044-03-14 0900")
-    updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-14 2100")
-    updatedBpRecord = createTimeInEvent(cRecord, "0044-03-15 0800")
-    updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-15 1100")
-    //hoursWorkedOnDate(cRecord, "0044-03-15")
-    allWagesFor(cRecord)
+function calculatePayroll(employees) { //calculates total combined wages paid out to multiple employees
+    let total = 0
+    employees.forEach(worker => {
+        total = total + allWagesFor(worker)
+        console.log(total)
+    })
+    return total
 }
+
+function findEmployeeByFirstName(group, target) {
+    let employee = group.find(check => check.firstName === target)
+    return employee
+}
+
+ function myTest() {
+//     let cRecord = createEmployeeRecord(["Julius", "Caesar", "General", 27])
+//     let updatedBpRecord = createTimeInEvent(cRecord, "0044-03-14 0900")
+//     updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-14 2100")
+//     updatedBpRecord = createTimeInEvent(cRecord, "0044-03-15 0800")
+//     updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-15 1100")
+//     //hoursWorkedOnDate(cRecord, "0044-03-15")
+//     allWagesFor(cRecord)
+    let src = [
+        ["Loki", "Laufeysson-Odinsson", "HR Representative", 35],
+        ["Natalia", "Romanov", "CEO", 150]
+    ]
+    let emps = createEmployeeRecords(src)
+    let loki = findEmployeeByFirstName(emps, "Loki")
+    expect(loki.familyName).to.equal("Laufeysson-Odinsson")
+ }
